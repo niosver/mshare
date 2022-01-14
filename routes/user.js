@@ -1,6 +1,5 @@
 var express = require('express');
 const SQL = require('../queries/queries.json');
-var request = require('request');
 var make_request = require('./srequest');
 var querystring = require('querystring');
 
@@ -26,18 +25,16 @@ module.exports = function(conn,prod) {
                     headers: { 'Authorization': 'Bearer ' + access_token },
                     json: true
                 };
-                // use the access token to access the Spotify Web API
-                request.get(options, async function(error, response, body) {
-                    if(!error && response.statusCode === 200) {
-                        user_prop.display_name = body.display_name;
-                        user_prop.img_url = body.images[0].url;
-                        res.status(200).send(user_prop);
-                    }
-                    else if(response.statusCode === 401) {
-                        //unauthorized need to refresh or get new access token
-
-                    }
-                });
+                var body = await make_request(options,conn,sessid);
+                if(body && body!==400){
+                    user_prop.display_name = body.display_name;
+                    user_prop.img_url = body.images[0].url;
+                    res.status(200).send(user_prop);
+                }
+                else{
+                    res.redirect('/login');
+                    return;
+                }
             }
             
         }
