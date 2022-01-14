@@ -1,0 +1,23 @@
+{
+  "name": "mshare",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./express/app.js",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "form-data": "^4.0.0",
+    "greenlock-express": "^4.0.3",
+    "pg-promise": "^10.11.1",
+    "querystring": "^0.2.1",
+    "request": "^2.88.2"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "start_docker": "docker-compose up"
+  }
+}

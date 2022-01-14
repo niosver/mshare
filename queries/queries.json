@@ -1,0 +1,59 @@
+{
+    "Users": {
+        "find_user": "SELECT uuid FROM users WHERE spid = $1;",
+        "create_user": "INSERT INTO users (sessid,authtoken,refreshtoken,spid,img,d_name) VALUES($1,$2,$3,$4,$5,$6);",
+        "update_user": "UPDATE users SET sessid=$1,authtoken=$2,refreshtoken=$3,img=$4,d_name=$5 WHERE uuid = $6;",
+        "get_refresh": "SELECT refreshtoken FROM users WHERE sessid = $1;",
+        "get_access": "SELECT authtoken FROM users WHERE sessid = $1;",
+        "save_access": "UPDATE users SET authtoken = $1 WHERE sessid = $2;",
+        "save_access_refresh": "UPDATE users SET (authtoken,refreshtoken) = ($1,$2) WHERE sessid = $3;",
+        "search_users": "SELECT uuid,d_name,img FROM users WHERE d_name LIKE $1 AND spid != $2 LIMIT $3;",
+        "get_user_spid": "SELECT uuid,spid FROM users WHERE sessid = $1;",
+        "get_dname": "SELECT d_name from users where uuid=$1;",
+        "remove_sessid": "UPDATE users SET sessid='null' WHERE sessid=$1;",
+        "remove_identifiers": "UPDATE users SET sessid='null',authtoken='null',refreshtoken='null',spid='null',img='',d_name='[deleted]' WHERE sessid=$1;"
+    },
+    "Relationships": {
+        "get_socialu": "SELECT users.uuid as uuid,status,d_name,img,orig FROM relationships LEFT JOIN users ON relationships.uuid = users.uuid WHERE relationships.ouuid = $1;",
+        "get_socialo": "SELECT ouuid as uuid,status,d_name,img,orig FROM relationships LEFT JOIN users ON relationships.ouuid = users.uuid WHERE relationships.uuid = $1;",
+        "get_status": "SELECT status,orig FROM relationships WHERE (uuid=$1 AND ouuid=$2) OR (uuid=$2 AND ouuid=$1);",
+        "add_friend": "INSERT INTO relationships (uuid,ouuid,status,orig) VALUES ($1,$2,'pending',$1);",
+        "add_friend_pend": "UPDATE relationships SET status = 'friends' WHERE uuid=$1 AND ouuid=$2 AND orig=$1;",
+        "check_pend":"SELECT status from relationships WHERE uuid=$1 AND ouuid=$2 AND orig=$1;",
+        "remove_friend":"DELETE from relationships WHERE (uuid=$1 AND ouuid=$2) OR (uuid=$2 AND ouuid=$1)",
+        "add_follow":"INSERT INTO following (uuid,ouuid) VALUES($1,$2);",
+        "remove_follow":"DELETE from following WHERE uuid=$1 AND ouuid=$2;",
+        "check_follow":"SELECT * FROM following WHERE uuid=$1 AND ouuid=$2;",
+        "get_follows":"SELECT following.ouuid as uuid,d_name,img from following left join users on following.ouuid = users.uuid WHERE following.uuid=$1",
+        "get_friends_o":"SELECT users.uuid as uuid,status,d_name,img,orig FROM relationships LEFT JOIN users ON relationships.uuid = users.uuid WHERE relationships.ouuid = $1 AND status='friends';",
+        "get_friends_u":"SELECT ouuid as uuid,status,d_name,img,orig FROM relationships LEFT JOIN users ON relationships.ouuid = users.uuid WHERE relationships.uuid = $1 AND status='friends';",
+        "get_following_uuid": "SELECT uuid FROM following where ouuid=$1;",
+        "remove_friendships": "DELETE FROM relationships WHERE uuid=$1 OR ouuid=$1;",
+        "remove_following": "DELETE FROM following WHERE uuid=$1 OR ouuid=$1;"
+    },
+    "Tracks": {
+        "put_track":"INSERT INTO tracks (spid,sender,clipstart,clipend,msg) VALUES ($1,$2,$3,$4,$5);",
+        "get_uuid":"SELECT trackid FROM tracks WHERE spid=$1 AND sender=$2 AND clipstart=$3 AND clipend=$4 AND msg=$5;",
+        "get_track": "SELECT trackid,spid,sender,clipstart,clipend,msg FROM tracks WHERE trackid=$1;"
+    },
+    "Playlists": {
+        "get_playlist_s": "SELECT playlistid,data FROM playlists WHERE uuid=$1 AND $2=ANY(contributers);",
+        "put_playlist":"UPDATE playlists SET data=$1::uuid[] WHERE uuid=$2 AND playlistid=$3;",
+        "create_default_playlist": "INSERT INTO playlists (uuid,contributers,data,name,following) VALUES ($1,'{}','{}','default','true');",
+        "get_playlists": "SELECT * FROM playlists where uuid=$1;",
+        "get_playlist": "SELECT data FROM playlists WHERE uuid=$1 AND playlistid=$2;",
+        "remove_playlists": "DELETE FROM playlists WHERE uuid=$1;",
+        "get_playlist_data":"SELECT data from playlists WHERE uuid=$1 AND playlistid=$2;",
+        "put_playlist_data": "UPDATE playlists SET data=$1::uuid[] WHERE uuid=$2 AND playlistid=$3;",
+        "get_playlist_f":"SELECT playlistid,data FROM playlists WHERE uuid=$1 AND following='true';",
+        "get_contributers":"SELECT contributers FROM playlists WHERE uuid=$1 AND playlistid=$2;",
+        "put_contributers":"UPDATE playlists SET contributers=$1::uuid[] WHERE uuid=$2 AND playlistid=$3;",
+        "get_id_default":"SELECT playlistid FROM playlists WHERE uuid=$1 AND name='default';",
+        "create_playlist": "INSERT INTO playlists (uuid,contributers,data,name,following) VALUES ($1,'{}','{}',$2,false);",
+        "check_following": "SELECT following FROM playlists WHERE uuid=$1 AND playlistid=$2;",
+        "change_following": "UPDATE playlists SET following=$1 WHERE uuid=$2 AND playlistid=$3;",
+        "delete_playlist": "DELETE FROM playlists WHERE uuid=$1 AND playlistid=$2;",
+        "find_id_contributer": "SELECT contributers,playlistid FROM playlists WHERE uuid=$1 AND $2=ANY(contributers);",
+        "remove_following": "UPDATE playlists SET following='false' WHERE uuid=$1 AND following='true';"
+    }
+}

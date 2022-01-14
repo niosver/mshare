@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  express:
+    container_name: mshare_app
+    hostname: mshare_app
+    build: .
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - .:/dockerapp
+    depends_on:
+      - db
+    environment:
+      - PROD=DEV
+      - VIRTUAL_HOST=mshare.niosver.app
+      - LETSENCRYPT_HOST=mshare.niosver.app
+      - LETSENCRYPT_EMAIL=raladnier@hotmail.com
+  db:
+    container_name: postgres
+    restart: always
+    image: postgres:14.1
+    volumes:
+      - ./database:/var/lib/postgresql/database
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=admin
