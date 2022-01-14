@@ -16,8 +16,11 @@ services:
     restart: always
     image: postgres:14.1
     volumes:
-      - ./database:/var/lib/postgresql/database
+      - pgdata:/var/lib/postgresql/database
     ports:
       - 5432:5432
     environment:
       - POSTGRES_PASSWORD=admin
+volumes:
+  pgdata:
+    external:true

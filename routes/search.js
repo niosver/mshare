@@ -147,9 +147,10 @@ module.exports = function(conn,prod) {
                 console.log(side1);
                 var side2 = await conn.any(SQL.Relationships.get_friends_u,uuid);
                 console.log(side2);
+                var side3 = await conn.any(SQL.Relationships.get_follows,uuid)
                 var friends = side1.concat(side2);
-                
-                res.status(200).send(friends);
+                var friendsAndFollows = friends.concat(side3);
+                res.status(200).send(friendsAndFollows);
             }
             
         }
