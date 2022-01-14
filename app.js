@@ -28,6 +28,8 @@ const redirect_uri = process.env.REDIRECT;
 const stateKey = "spotify_auth_state";
 const prod = process.env.PROD === "PROD"?true:false;
 
+console.log(redirect_uri);
+
 var app = express();
 app.use(express.static(__dirname + '/public/build'))
     .use(cors())

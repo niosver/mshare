@@ -10,7 +10,7 @@ services:
     depends_on:
       - db
     environment:
-      - PROD=DEV
+      - PROD=PROD
   db:
     container_name: postgres
     restart: always
