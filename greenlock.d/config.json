@@ -21,6 +21,14 @@
         "mshare.niosver.app"
       ],
       "renewAt": 1
+    },
+    {
+      "subject": "niosver.app",
+      "altnames": [
+        "niosver.app",
+        "mshare.niosver.app"
+      ],
+      "renewAt": 1
     }
   ]
 }

@@ -3,19 +3,14 @@ services:
   express:
     container_name: mshare_app
     hostname: mshare_app
-    build: .
+    image: niosver/mshare
     ports:
       - 80:80
       - 443:443
-    volumes:
-      - .:/dockerapp
     depends_on:
       - db
     environment:
       - PROD=DEV
-      - VIRTUAL_HOST=mshare.niosver.app
-      - LETSENCRYPT_HOST=mshare.niosver.app
-      - LETSENCRYPT_EMAIL=raladnier@hotmail.com
   db:
     container_name: postgres
     restart: always
