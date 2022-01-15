@@ -9,7 +9,7 @@ This project is a demo of a music sharing method that involves users owning play
 
 #### Spotify API limits
 
-**Unfortunately Spotify now limits API requests to 25 users you manually register on the Developer Console so accessing the app is limited. So bewlow are some screen captures of the application. If you would like to access it for yourself send me a request so I can add you to the console.**
+**_Unfortunately Spotify now limits API requests to 25 users you manually register on the Developer Console so accessing the app is limited. So bewlow are some screen captures of the application. If you would like to access it for yourself send me a request so I can add you to the console._**
 
 ##### Login Page
 
