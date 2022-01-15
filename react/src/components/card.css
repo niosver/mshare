@@ -1,0 +1,20 @@
+.album-card {
+    width: 18rem;
+    background-color: darkslategray;
+}
+
+.album-card-name {
+    color: white;
+    font-size: large;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.album-card-artist {
+    color:white;
+    font-size: medium;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.track-card {
+    max-width: 540px;
+}

@@ -77,7 +77,8 @@ module.exports = function(conn,client_id,client_secret,stateKey, redirect_uri,pr
                     //also write auth and refresh tokens in
                     
                     try {
-                        var img = body.images[0]?body.images[0].url:null;
+                        console.log(body);
+                        var img = body.images?body.images[0]?body.images[0].url:null:null;
                         var test = await conn.oneOrNone(SQL.Users.find_user,body.id);
                         if(!test) {
                             await conn.none(SQL.Users.create_user,[sessid,access_token,refresh_token,body.id,img,body.display_name]);

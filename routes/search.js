@@ -57,6 +57,7 @@ module.exports = function(conn,prod) {
                 res.status(401).send("Unauthorized");
             }
             else {
+                console.log("haha")
                 var uuid = ret.uuid;
                 console.log(uuid);
                 var side1 = await conn.any(SQL.Relationships.get_socialo,uuid);
@@ -65,6 +66,8 @@ module.exports = function(conn,prod) {
                 console.log(side2);
                 var users = side1.concat(side2);
                 console.log(users);
+                var side3 = await conn.any(SQL.Relationships.get_follows,uuid)
+                var friends = users.concat(side2);
 
                 for(var i=0;i<users.length;i++){
                     var ret = await conn.oneOrNone(SQL.Relationships.check_follow,[uuid,users[i].uuid]);
@@ -75,8 +78,24 @@ module.exports = function(conn,prod) {
                         users[i].following="false";
                     }
                 }
-                
-                res.status(200).send(users);
+                var side3 = await conn.any(SQL.Relationships.get_follows,uuid);
+                console.log("hehehehehe")
+                console.log(side3);
+                for(var j=0;j<side3.length;j++){
+                    var test = await conn.oneOrNone(SQL.Relationships.check_friend,[uuid,side3[j].uuid]);
+                    console.log(test);
+                    if(!test){
+                        side3[j].following="true";
+                    }
+                    else{
+                        side3.splice(j,1);
+                        j--
+                    }
+
+                }
+                var friends = users.concat(side3);
+                console.log
+                res.status(200).send(friends);
             }
             
         }
@@ -142,15 +161,15 @@ module.exports = function(conn,prod) {
                 res.status(401).send("Unauthorized");
             }
             else {
+                console.log("test")
                 var uuid = ret.uuid;
                 var side1 = await conn.any(SQL.Relationships.get_friends_o,uuid);
                 console.log(side1);
                 var side2 = await conn.any(SQL.Relationships.get_friends_u,uuid);
                 console.log(side2);
-                var side3 = await conn.any(SQL.Relationships.get_follows,uuid)
                 var friends = side1.concat(side2);
-                var friendsAndFollows = friends.concat(side3);
-                res.status(200).send(friendsAndFollows);
+
+                res.status(200).send(friends);
             }
             
         }

@@ -55,5 +55,7 @@ app.get('/*', function(req,res) {
     res.sendFile(path.join(__dirname,'/public/build/index.html'))
 });
 
-
+// app.listen(80, () => {
+//     console.log(`Example app listening at http://localhost:80`)
+// })
 module.exports = app;

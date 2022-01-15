@@ -29,7 +29,8 @@
         "get_friends_u":"SELECT ouuid as uuid,status,d_name,img,orig FROM relationships LEFT JOIN users ON relationships.ouuid = users.uuid WHERE relationships.uuid = $1 AND status='friends';",
         "get_following_uuid": "SELECT uuid FROM following where ouuid=$1;",
         "remove_friendships": "DELETE FROM relationships WHERE uuid=$1 OR ouuid=$1;",
-        "remove_following": "DELETE FROM following WHERE uuid=$1 OR ouuid=$1;"
+        "remove_following": "DELETE FROM following WHERE uuid=$1 OR ouuid=$1;",
+        "check_friend": "SELECT * FROM relationships WHERE (uuid=$1 AND ouuid=$2) OR (uuid=$2 AND ouuid=$1);"
     },
     "Tracks": {
         "put_track":"INSERT INTO tracks (spid,sender,clipstart,clipend,msg) VALUES ($1,$2,$3,$4,$5);",

@@ -28,7 +28,7 @@ module.exports = function(conn,prod) {
                 var body = await make_request(options,conn,sessid);
                 if(body && body!==400){
                     user_prop.display_name = body.display_name;
-                    user_prop.img_url = body.images[0].url;
+                    user_prop.img_url = body.images[0]?body.images[0].url:null;
                     res.status(200).send(user_prop);
                 }
                 else{

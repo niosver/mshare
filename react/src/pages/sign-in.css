@@ -1,0 +1,23 @@
+/* html,
+body {
+  height: 100%;
+}
+
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: rgb(31, 31, 31);
+}
+
+#signin-card {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  box-sizing: border-box;
+  height: auto;
+  font-size: 16px;
+} */
